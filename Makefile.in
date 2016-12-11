@@ -1,0 +1,55 @@
+CC = @CC@ @ARCH@ @LTO@ @STD@
+CFLAGS = -c -Wall -O3 @CPPFLAGS@
+LDFLAGS = @LDFLAGS@ @LIBS@ @GLIB_LIBS@ @GTK_LIBS@
+
+SRC = config.h game.h game.c interface.h interface.c main.c
+OBJ = game.o interface.o main.o @ICON@
+DEP = config.h Makefile
+ES = es/LC_MESSAGES/
+FR = fr/LC_MESSAGES/
+GB = en_GB/LC_MESSAGES/
+
+all: lightsoff po/$(ES)lightsoff.mo po/$(FR)lightsoff.mo
+
+game.o: game.c game.h $(DEP)
+	$(CC) $(CFLAGS) @GLIB_CFLAGS@ game.c
+
+interface.o: interface.c interface.h game.h $(DEP)
+	$(CC) $(CFLAGS) @GLIB_CFLAGS@ @GTK_CFLAGS@ interface.c
+
+main.o: main.c interface.h game.h $(DEP)
+	$(CC) $(CFLAGS) @GLIB_CFLAGS@ @GTK_CFLAGS@ main.c
+
+lightsoff: $(OBJ)
+	$(CC) $(OBJ) @ICON@ $(LDFLAGS) -o lightsoff
+
+po/lightsoff.pot: lightsoff
+	test -d po || mkdir po
+	xgettext -k_ -d lightsoff -o po/lightsoff.pot --from-code=UTF-8 $(SRC)
+
+po/$(ES)lightsoff.po: po/lightsoff.pot
+	test -d po/$(ES) || mkdir -p po/$(ES)
+	test -f po/$(ES)lightsoff.po || \
+		msginit -l es -o po/$(ES)lightsoff.po -i po/lightsoff.pot \
+		--no-translator
+	msgmerge -U po/$(ES)lightsoff.po po/lightsoff.pot
+	vim -p po/$(ES)lightsoff.po
+	touch po/$(ES)lightsoff.po
+
+po/$(ES)lightsoff.mo: po/$(ES)lightsoff.po po/lightsoff.pot
+	msgfmt -c -v -o po/$(ES)lightsoff.mo po/$(ES)lightsoff.po
+
+po/$(FR)lightsoff.po: po/lightsoff.pot
+	test -d po/$(FR) || mkdir -p po/$(FR)
+	test -f po/$(FR)lightsoff.po || \
+		msginit -l fr -o po/$(FR)lightsoff.po -i po/lightsoff.pot \
+		--no-translator
+	msgmerge -U po/$(FR)lightsoff.po po/lightsoff.pot
+	vim -p po/$(FR)lightsoff.po
+	touch po/$(FR)lightsoff.po
+
+po/$(FR)lightsoff.mo: po/$(FR)lightsoff.po po/lightsoff.pot
+	msgfmt -c -v -o po/$(FR)lightsoff.mo po/$(FR)lightsoff.po
+
+@ICON@: lightsoff.rc lightsoff.ico
+	@WINDRES@ lightsoff.rc -o @ICON@

@@ -1,0 +1,136 @@
+# French translations for lightsoff package.
+# Copyright (C) 2016 THE lightsoff'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the lightsoff package.
+# Automatically generated, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lightsoff 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-11 06:45+0100\n"
+"PO-Revision-Date: 2016-12-09 15:54+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: interface.c:365
+#, c-format
+msgid "Number of movements: %u"
+msgstr "Nombre de mouvements: %u"
+
+#: interface.c:410
+#, c-format
+msgid "Game solved in %u movements"
+msgstr "Partie résolu en %u mouvements"
+
+#: interface.c:412
+msgid "Congratulations!"
+msgstr "Félicitations!"
+
+#: interface.c:475
+msgid "Click on the wanted buttons and press OK button"
+msgstr "Clic le boutons désirés et aprés appuyer sur le bouton d'accepter"
+
+#: interface.c:477
+msgid "Set the game"
+msgstr "Introduire la partie"
+
+#: interface.c:553
+msgid "Geometric"
+msgstr "Géométrique"
+
+#: interface.c:554
+msgid "Faces"
+msgstr "Visages"
+
+#: interface.c:563
+msgid "Options"
+msgstr "Options"
+
+#: interface.c:566
+msgid "_OK"
+msgstr "_Accepter"
+
+#: interface.c:568
+msgid "_Cancel"
+msgstr "_Annuler"
+
+#: interface.c:572
+msgid "Number of rows"
+msgstr "Nombre de files"
+
+#: interface.c:574
+msgid "Number of columns"
+msgstr "Nombre de colonnes"
+
+#: interface.c:576
+msgid "Game level"
+msgstr "Niveau de jeu"
+
+#: interface.c:578
+msgid "Theme"
+msgstr "Thème"
+
+#: interface.c:594
+msgid "_Custom input"
+msgstr "_Entrée personnalisée"
+
+#: interface.c:647
+msgid "Unable to find a solution"
+msgstr "Impossible de trouver une solution"
+
+#: interface.c:648
+msgid "Sorry!"
+msgstr "Désolé!"
+
+#: interface.c:669
+msgid "Lights off game"
+msgstr "Jeu lumières dehors"
+
+#: interface.c:691
+msgid "Lights off"
+msgstr "Lumières dehors"
+
+#: interface.c:711 interface.c:712
+msgid "Exit"
+msgstr "Quitter"
+
+#: interface.c:722 interface.c:723
+msgid "About"
+msgstr "À propos"
+
+#: interface.c:732
+msgid "Optimal solution"
+msgstr "Solution optimale"
+
+#: interface.c:734
+msgid "Show the optimal solution"
+msgstr "Montrer la solution optimale"
+
+#: interface.c:743
+msgid "Undo"
+msgstr "Annuler"
+
+#: interface.c:745
+msgid "Undo the last movement"
+msgstr "Annuler le dernier mouvement"
+
+#: interface.c:753
+msgid "Clear"
+msgstr "Effacer"
+
+#: interface.c:755
+msgid "Clear all movements"
+msgstr "Effacer tous mouvements"
+
+#: interface.c:765 interface.c:766
+msgid "Preferences"
+msgstr "Préférences"
+
+#: interface.c:776 interface.c:777
+msgid "New game"
+msgstr "Partie nouvelle"
