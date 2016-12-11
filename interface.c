@@ -48,8 +48,10 @@ enum WindowTheme
   WINDOW_THEME_GEOMETRIC = 0,   ///< Geometric buttons theme.
   WINDOW_THEME_FACES = 1,       ///< Faces buttons theme.
 };
+
 ///> Number of button themes.
 #define N_THEMES (WINDOW_THEME_FACES + 1)
+
 ///> Theme images for the light buttons.
 const char *light_images[N_THEMES] = {
   "media-playback-stop",
@@ -326,9 +328,7 @@ window_destroy ()
   GList *list;
   free (array_buttons);
   for (list = list_movements; list; list = list->next)
-    {
-      free (list->data);
-    }
+    free (list->data);
   g_list_free (list_movements);
   list_movements = NULL;
 }
@@ -563,8 +563,7 @@ window_options ()
     gtk_dialog_new_with_buttons (_("Options"),
                                  window,
                                  GTK_DIALOG_MODAL,
-                                 _("_OK"),
-                                 GTK_RESPONSE_OK,
+                                 _("_OK"), GTK_RESPONSE_OK,
                                  _("_Cancel"), GTK_RESPONSE_CANCEL, NULL);
   content = (GtkContainer *) gtk_dialog_get_content_area (dialog);
   grid = (GtkGrid *) gtk_grid_new ();
@@ -665,8 +664,7 @@ window_about ()
   gtk_show_about_dialog
     (window,
      "program-name", "LightsOff",
-     "comments",
-     _("Lights off game"),
+     "comments", _("Lights off game"),
      "authors", authors,
      "copyright", "Copyright 2016 Javier Burguete Tolosa",
      "license-type", GTK_LICENSE_BSD,
