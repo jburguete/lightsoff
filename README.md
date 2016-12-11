@@ -1,8 +1,8 @@
 LightsOff
 =========
 
-A clone of the Tim Horton's LightsOff program written in C, adding variable
-board sizes, custom input, image themes, undo and clear movements and a solver.
+A clone of the Tim Horton's LightsOff game written in C, adding variable board
+sizes, custom input, image themes, undo and clear movements and a solver.
 
 AUTHOR
 ------
