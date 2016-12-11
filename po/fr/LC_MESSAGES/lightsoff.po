@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lightsoff 0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-11 06:45+0100\n"
+"POT-Creation-Date: 2016-12-11 09:00+0100\n"
 "PO-Revision-Date: 2016-12-09 15:54+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -55,82 +55,82 @@ msgstr "Options"
 msgid "_OK"
 msgstr "_Accepter"
 
-#: interface.c:568
+#: interface.c:567
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: interface.c:572
+#: interface.c:571
 msgid "Number of rows"
 msgstr "Nombre de files"
 
-#: interface.c:574
+#: interface.c:573
 msgid "Number of columns"
 msgstr "Nombre de colonnes"
 
-#: interface.c:576
+#: interface.c:575
 msgid "Game level"
 msgstr "Niveau de jeu"
 
-#: interface.c:578
+#: interface.c:577
 msgid "Theme"
 msgstr "Thème"
 
-#: interface.c:594
+#: interface.c:593
 msgid "_Custom input"
 msgstr "_Entrée personnalisée"
 
-#: interface.c:647
+#: interface.c:646
 msgid "Unable to find a solution"
 msgstr "Impossible de trouver une solution"
 
-#: interface.c:648
+#: interface.c:647
 msgid "Sorry!"
 msgstr "Désolé!"
 
-#: interface.c:669
+#: interface.c:667
 msgid "Lights off game"
 msgstr "Jeu lumières dehors"
 
-#: interface.c:691
+#: interface.c:689
 msgid "Lights off"
 msgstr "Lumières dehors"
 
-#: interface.c:711 interface.c:712
+#: interface.c:709 interface.c:710
 msgid "Exit"
 msgstr "Quitter"
 
-#: interface.c:722 interface.c:723
+#: interface.c:720 interface.c:721
 msgid "About"
 msgstr "À propos"
 
-#: interface.c:732
+#: interface.c:730
 msgid "Optimal solution"
 msgstr "Solution optimale"
 
-#: interface.c:734
+#: interface.c:732
 msgid "Show the optimal solution"
 msgstr "Montrer la solution optimale"
 
-#: interface.c:743
+#: interface.c:741
 msgid "Undo"
 msgstr "Annuler"
 
-#: interface.c:745
+#: interface.c:743
 msgid "Undo the last movement"
 msgstr "Annuler le dernier mouvement"
 
-#: interface.c:753
+#: interface.c:751
 msgid "Clear"
 msgstr "Effacer"
 
-#: interface.c:755
+#: interface.c:753
 msgid "Clear all movements"
 msgstr "Effacer tous mouvements"
 
-#: interface.c:765 interface.c:766
+#: interface.c:763 interface.c:764
 msgid "Preferences"
 msgstr "Préférences"
 
-#: interface.c:776 interface.c:777
+#: interface.c:774 interface.c:775
 msgid "New game"
 msgstr "Partie nouvelle"
