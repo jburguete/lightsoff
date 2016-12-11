@@ -670,7 +670,7 @@ window_about ()
      "authors", authors,
      "copyright", "Copyright 2016 Javier Burguete Tolosa",
      "license-type", GTK_LICENSE_BSD,
-     "version", "0.1.0",
+     "version", "0.0",
      "website", "http://github.com/jburguete/lightsoff", NULL);
 }
 

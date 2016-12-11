@@ -1,5 +1,5 @@
 AC_PREREQ([2.67])
-AC_INIT([lightsoff], [0.1.0], [https://github.com/jburguete/lightsoff])
+AC_INIT([lightsoff], [0.0], [https://github.com/jburguete/lightsoff])
 
 # Checks for operative systems
 AC_CANONICAL_SYSTEM

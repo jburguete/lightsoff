@@ -51,5 +51,8 @@ po/$(FR)lightsoff.po: po/lightsoff.pot
 po/$(FR)lightsoff.mo: po/$(FR)lightsoff.po po/lightsoff.pot
 	msgfmt -c -v -o po/$(FR)lightsoff.mo po/$(FR)lightsoff.po
 
+lightsoff.ico: lightsoff.png Makefile
+	convert lightsoff.png lightsoff.ico
+
 @ICON@: lightsoff.rc lightsoff.ico
 	@WINDRES@ lightsoff.rc -o @ICON@
