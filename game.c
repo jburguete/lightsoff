@@ -54,7 +54,7 @@ unsigned int movement[N_MAX_SQUARES];
 uint64_t movements_array[N_MAX_SQUARES];
 
 /**
- * \fn void set (uint64_t *status, unsigned int square)
+ * \fn void set (uint64_t * status, unsigned int square)
  * \brief Function to set a square.
  * \param status
  * \brief bits chain codifying the game status.
@@ -155,7 +155,7 @@ generate_movements ()
 }
 
 /**
- * \fn void move (uint64_t *status, unsigned int type)
+ * \fn void move (uint64_t * status, unsigned int type)
  * \brief Function to do one movement.
  * \param status
  * \brief bits chain codifying the game status.
@@ -205,7 +205,7 @@ game_new ()
 }
 
 /**
- * \fn static int hunt (uint64_t *status)
+ * \fn static int hunt (uint64_t * status)
  * \brief Function to do one movement.
  * \param status
  * \brief bits chain codifying the game status.

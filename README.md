@@ -45,7 +45,7 @@ The source code has to have the following files:
 * config.h.in: config header generator.
 * \*.c: source code files.
 * \*.h: header code files.
-* lightsoff.ico: icon file.
+* lightsoff.rc: Microsoft Windows resources file.
 * logo.xpm: logo figure.
 * Doxyfile: configuration file to generate doxygen documentation.
 * README.md: this file.
