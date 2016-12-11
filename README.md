@@ -49,7 +49,7 @@ The source code has to have the following files:
 * \*.c: source code files.
 * \*.h: header code files.
 * lightsoff.rc: Microsoft Windows resources file.
-* logo.xpm: logo figure.
+* logo.png: logo figure.
 * Doxyfile: configuration file to generate doxygen documentation.
 * README.md: this file.
 * license.md: license file.
