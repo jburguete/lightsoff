@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: lightsoff 0.1.0\n"
+"Project-Id-Version: lightsoff 0.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-11 06:45+0100\n"
 "PO-Revision-Date: 2016-12-09 15:54+0100\n"
