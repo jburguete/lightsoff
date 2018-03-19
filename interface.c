@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016, Javier Burguete Tolosa.
+Copyright 2016-2018, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file interface.c
  * \brief Source file of the lights off game interface.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2018, Javier Burguete Tolosa.
  */
 #include <stdlib.h>
 #include <stdint.h>
@@ -319,8 +319,7 @@ const char *logo_xpm[] = {
 };
 
 /**
- * \fn void window_destroy ()
- * \brief Function to free memory assigned by the main window.
+ * Function to free memory assigned by the main window.
  */
 void
 window_destroy ()
@@ -334,8 +333,7 @@ window_destroy ()
 }
 
 /**
- * \fn static void window_set ()
- * \brief Function to set the light buttons.
+ * Function to set the light buttons.
  */
 static void
 window_set ()
@@ -358,8 +356,7 @@ window_set ()
           gtk_toggle_button_set_active (array_buttons[i], 0);
           image = NULL;
         }
-      gtk_button_set_image (GTK_BUTTON (array_buttons[i]),
-                            GTK_WIDGET (image));
+      gtk_button_set_image (GTK_BUTTON (array_buttons[i]), GTK_WIDGET (image));
       g_signal_handler_unblock (array_buttons[i], array_ids[i]);
     }
   snprintf (label, 64, _("Number of movements: %u"), window_movements);
@@ -367,13 +364,10 @@ window_set ()
 }
 
 /**
- * \fn static void window_toggle (GtkToggleButton *button)
- * \brief Function to set a square.
- * \param button
- * \brief button to set.
+ * Function to set a square.
  */
 static void
-window_toggle (GtkToggleButton * button)
+window_toggle (GtkToggleButton * button)        ///< button to set.
 {
   unsigned int i;
   for (i = 0; button != array_buttons[i]; ++i);
@@ -382,13 +376,10 @@ window_toggle (GtkToggleButton * button)
 }
 
 /**
- * \fn static void window_move (GtkToggleButton *button)
- * \brief Function to do a movement.
- * \param button
- * \brief button to move.
+ * Function to do a movement.
  */
 static void
-window_move (GtkToggleButton * button)
+window_move (GtkToggleButton * button)  ///< button to move.
 {
   GtkMessageDialog *dialog;
   unsigned int *data;
@@ -416,8 +407,7 @@ window_move (GtkToggleButton * button)
 }
 
 /**
- * \fn static void window_undo ()
- * \brief Function to undo an user movement.
+ * Function to undo an user movement.
  */
 static void
 window_undo ()
@@ -433,8 +423,7 @@ window_undo ()
 }
 
 /**
- * \fn static void window_clear ()
- * \brief Function to clear all user movements.
+ * Function to clear all user movements.
  */
 static void
 window_clear ()
@@ -444,8 +433,7 @@ window_clear ()
 }
 
 /**
- * \fn static void window_custom ()
- * \brief Function to input a custom game.
+ * Function to input a custom game.
  */
 static void
 window_custom ()
@@ -490,8 +478,7 @@ window_custom ()
 }
 
 /**
- * \fn static void window_new_game ()
- * \brief Function to do a new game.
+ * Function to do a new game.
  */
 static void
 window_new_game ()
@@ -527,8 +514,7 @@ window_new_game ()
 }
 
 /**
- * \fn void window_options_update ()
- * \brief Function to update the options dialog properties.
+ * Function to update the options dialog properties.
  */
 void
 window_options_update ()
@@ -543,8 +529,7 @@ window_options_update ()
 }
 
 /**
- * \fn static void window_options ()
- * \brief Function to set the game options.
+ * Function to set the game options.
  */
 static void
 window_options ()
@@ -602,8 +587,7 @@ window_options ()
   gtk_spin_button_set_value (spin_rows, window_rows);
   gtk_spin_button_set_value (spin_columns, window_columns);
   gtk_spin_button_set_value (spin_level, level);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_input),
-                                window_input);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_input), window_input);
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo), window_theme);
   if (gtk_dialog_run (dialog) == GTK_RESPONSE_OK)
     {
@@ -618,8 +602,7 @@ window_options ()
 }
 
 /**
- * \fn static void window_solve ()
- * \brief Function to print the optimal solution.
+ * Function to print the optimal solution.
  */
 static void
 window_solve ()
@@ -651,8 +634,7 @@ window_solve ()
 }
 
 /**
- * \fn static void window_about ()
- * \brief Function to show an about dialog.
+ * Function to show an about dialog.
  */
 static void
 window_about ()
@@ -666,15 +648,14 @@ window_about ()
      "program-name", "LightsOff",
      "comments", _("Lights off game"),
      "authors", authors,
-     "copyright", "Copyright 2016 Javier Burguete Tolosa",
+     "copyright", "Copyright 2016-2018 Javier Burguete Tolosa",
      "license-type", GTK_LICENSE_BSD,
      "version", "0.0",
      "website", "http://github.com/jburguete/lightsoff", NULL);
 }
 
 /**
- * \fn static void window_activate (GtkApplication *application)
- * \brief Function to activate the window.
+ * Function to activate the window.
  */
 void
 window_activate (GtkApplication * application)
@@ -768,14 +749,12 @@ window_activate (GtkApplication * application)
 
   // New game tool
   image = (GtkImage *)
-    gtk_image_new_from_icon_name ("document-new",
-                                  GTK_ICON_SIZE_SMALL_TOOLBAR);
+    gtk_image_new_from_icon_name ("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
   button_new =
     (GtkToolButton *) gtk_tool_button_new (GTK_WIDGET (image), _("New game"));
   gtk_widget_set_tooltip_text (GTK_WIDGET (button_new), _("New game"));
   gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button_new), 0);
-  g_signal_connect (button_new, "clicked", G_CALLBACK (window_new_game),
-                    NULL);
+  g_signal_connect (button_new, "clicked", G_CALLBACK (window_new_game), NULL);
 
   // Movements label
   label_movements = (GtkLabel *) gtk_label_new (NULL);

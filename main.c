@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016, Javier Burguete Tolosa.
+Copyright 2016-2018, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file main.c
  * \brief Source file of the lights off game main function.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2018, Javier Burguete Tolosa.
  */
 #include <stdlib.h>
 #include <stdint.h>
@@ -43,16 +43,13 @@ OF SUCH DAMAGE.
 #include "interface.h"
 
 /**
- * \fn int main (int argn, char **argc)
- * \brief Main function.
- * \param argn
- * \brief arguments number.
- * \param argc
- * \brief array of argument chains.
- * \return 0 on succes, number of error on error.
+ * Main function.
+ *
+ * \return 0 on succes, error code on error.
  */
 int
-main (int argn, char **argc)
+main (int argn,                 ///< arguments number.
+      char **argc)              ///< array of argument chains.
 {
   char *buffer, *directory;
   directory = g_get_current_dir ();

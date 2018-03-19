@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016, Javier Burguete Tolosa.
+Copyright 2016-2018, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file game.c
  * \brief Source file of the lights off game.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2018, Javier Burguete Tolosa.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,22 +54,17 @@ unsigned int movement[N_MAX_SQUARES];
 uint64_t movements_array[N_MAX_SQUARES];
 
 /**
- * \fn void set (uint64_t * status, unsigned int square)
- * \brief Function to set a square.
- * \param status
- * \brief bits chain codifying the game status.
- * \param square
- * \brief square index.
+ * Function to set a square.
  */
 void
-set (uint64_t * status, unsigned int square)
+set (uint64_t * status,         ///< bits chain codifying the game status.
+     unsigned int square)       ///< square index.
 {
   *status ^= (1L << square);
 }
 
 /**
- * \fn void generate_movements ()
- * \brief Function to generate the array of movements.
+ * Function to generate the array of movements.
  */
 void
 generate_movements ()
@@ -155,22 +150,17 @@ generate_movements ()
 }
 
 /**
- * \fn void move (uint64_t * status, unsigned int type)
- * \brief Function to do one movement.
- * \param status
- * \brief bits chain codifying the game status.
- * \param type
- * \brief type of movement.
+ * Function to do one movement.
  */
 void
-move (uint64_t * status, unsigned int type)
+move (uint64_t * status,        ///< bits chain codifying the game status.
+      unsigned int type)        ///< type of movement.
 {
   *status ^= movements_array[type];
 }
 
 /**
- * \fn void game_init ()
- * \brief Function to init a new game.
+ * Function to init a new game.
  */
 void
 game_init ()
@@ -181,8 +171,7 @@ game_init ()
 }
 
 /**
- * \fn void game_new ()
- * \brief Function to generate a new game.
+ * Function to generate a new game.
  */
 void
 game_new ()
@@ -205,14 +194,12 @@ game_new ()
 }
 
 /**
- * \fn static int hunt (uint64_t * status)
- * \brief Function to do one movement.
- * \param status
- * \brief bits chain codifying the game status.
+ * Function to do one movement.
+ *
  * \return type of movement hunting the light.
  */
 static int
-hunt (uint64_t * status)
+hunt (uint64_t * status)        ///< bits chain codifying the game status.
 {
   unsigned int i, n;
   n = nsquares - ncolumns;
@@ -230,19 +217,14 @@ hunt (uint64_t * status)
 }
 
 /**
- * \fn static unsigned int play_hunt (uint64_t status, unsigned int depth, \
- *   unsigned int *movement)
- * \brief Function to elliminate lights by the hunt algorithm.
- * \param status
- * \brief bits chain codifying the game status.
- * \param depth
- * \brief number of past movements.
- * \param movement
- * \brief array of movements.
+ * Function to elliminate lights by the hunt algorithm.
+ *
  * \return on succes: number of movements; on failure: 0.
  */
 static unsigned int
-play_hunt (uint64_t status, unsigned int depth, unsigned int *movement)
+play_hunt (uint64_t status,     ///< bits chain codifying the game status.
+           unsigned int depth,  ///< number of past movements.
+           unsigned int *movement)      ///< array of movements.
 {
   uint64_t j, m;
   unsigned int i, n;
@@ -262,26 +244,18 @@ play_hunt (uint64_t status, unsigned int depth, unsigned int *movement)
 }
 
 /**
- * \fn static void play_recursive (uint64_t status, unsigned int depth, \
- *   unsigned int ii, unsigned int *m, unsigned int *kmax, \
- *   unsigned int *movement)
- * \brief Function to solve the game recursively.
- * \param status
- * \brief bits chain codifying the game status.
- * \param depth
- * \brief number of past movements.
- * \param ii
- * \brief index of the minimum allowed movement.
- * \param m
- * \brief array of current movements.
- * \param kmax
- * \brief number of movements of the current best play.
- * \param movement
- * \brief array of optimal movements.
+ * Function to solve the game recursively.
  */
 static void
-play_recursive (uint64_t status, unsigned int depth, unsigned int ii,
-                unsigned int *m, unsigned int *kmax, unsigned int *movement)
+play_recursive (uint64_t status,
+///< bits chain codifying the game status.
+                unsigned int depth,     ///< number of past movements.
+                unsigned int ii,
+///< index of the minimum allowed movement.
+                unsigned int *m,        ///< array of current movements.
+                unsigned int *kmax,
+///< number of movements of the current best play.
+                unsigned int *movement) ///< array of optimal movements.
 {
   uint64_t j;
   unsigned int i, k;
@@ -312,8 +286,8 @@ play_recursive (uint64_t status, unsigned int depth, unsigned int ii,
 }
 
 /**
- * \fn unsigned int play ()
- * \brief Function to search the optimal play to elliminate the lights.
+ * Function to search the optimal play to elliminate the lights.
+ *
  * \return on succes: number of movements; on failure: -1.
  */
 int
