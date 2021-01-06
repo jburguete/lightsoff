@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lightsoff 0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-19 19:31+0100\n"
+"POT-Creation-Date: 2021-01-06 18:54+0100\n"
 "PO-Revision-Date: 2016-12-09 15:54+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,106 +31,103 @@ msgstr "Partie résolu en %u mouvements"
 msgid "Congratulations!"
 msgstr "Félicitations!"
 
-#: interface.c:463
+#: interface.c:466
 msgid "Click on the wanted buttons and press OK button"
 msgstr "Clic le boutons désirés et aprés appuyer sur le bouton d'accepter"
 
-#: interface.c:465
+#: interface.c:469
 msgid "Set the game"
 msgstr "Introduire la partie"
 
-#: interface.c:538
+#: interface.c:561
 msgid "Geometric"
 msgstr "Géométrique"
 
-#: interface.c:539
+#: interface.c:562
 msgid "Faces"
 msgstr "Visages"
 
-#: interface.c:548
+#: interface.c:570
 msgid "Options"
 msgstr "Options"
 
-#: interface.c:551
+#: interface.c:573
 msgid "_OK"
 msgstr "_Accepter"
 
-#: interface.c:552
+#: interface.c:574
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: interface.c:556
+#: interface.c:579
 msgid "Number of rows"
 msgstr "Nombre de files"
 
-#: interface.c:558
+#: interface.c:581
 msgid "Number of columns"
 msgstr "Nombre de colonnes"
 
-#: interface.c:560
+#: interface.c:583
 msgid "Game level"
 msgstr "Niveau de jeu"
 
-#: interface.c:562
+#: interface.c:585
 msgid "Theme"
 msgstr "Thème"
 
-#: interface.c:578
+#: interface.c:601
 msgid "_Custom input"
 msgstr "_Entrée personnalisée"
 
-#: interface.c:629
+#: interface.c:642
 msgid "Unable to find a solution"
 msgstr "Impossible de trouver une solution"
 
-#: interface.c:630
+#: interface.c:644
 msgid "Sorry!"
 msgstr "Désolé!"
 
-#: interface.c:649
+#: interface.c:664
 msgid "Lights off game"
 msgstr "Jeu lumières dehors"
 
-#: interface.c:670
+#: interface.c:688
 msgid "Lights off"
 msgstr "Lumières dehors"
 
-#: interface.c:690 interface.c:691
-msgid "Exit"
-msgstr "Quitter"
+#: interface.c:707
+msgid "New game"
+msgstr "Partie nouvelle"
 
-#: interface.c:701 interface.c:702
-msgid "About"
-msgstr "À propos"
-
-#: interface.c:711
-msgid "Optimal solution"
-msgstr "Solution optimale"
-
-#: interface.c:713
-msgid "Show the optimal solution"
-msgstr "Montrer la solution optimale"
-
-#: interface.c:722
-msgid "Undo"
-msgstr "Annuler"
-
-#: interface.c:724
-msgid "Undo the last movement"
-msgstr "Annuler le dernier mouvement"
-
-#: interface.c:732
-msgid "Clear"
-msgstr "Effacer"
-
-#: interface.c:734
-msgid "Clear all movements"
-msgstr "Effacer tous mouvements"
-
-#: interface.c:744 interface.c:745
+#: interface.c:714
 msgid "Preferences"
 msgstr "Préférences"
 
-#: interface.c:754 interface.c:755
-msgid "New game"
-msgstr "Partie nouvelle"
+#: interface.c:723
+msgid "Clear all movements"
+msgstr "Effacer tous mouvements"
+
+#: interface.c:731
+msgid "Undo the last movement"
+msgstr "Annuler le dernier mouvement"
+
+#: interface.c:739
+msgid "Show the optimal solution"
+msgstr "Montrer la solution optimale"
+
+#: interface.c:747
+msgid "About"
+msgstr "À propos"
+
+#: interface.c:754
+msgid "Exit"
+msgstr "Quitter"
+
+#~ msgid "Optimal solution"
+#~ msgstr "Solution optimale"
+
+#~ msgid "Undo"
+#~ msgstr "Annuler"
+
+#~ msgid "Clear"
+#~ msgstr "Effacer"

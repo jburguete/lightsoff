@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016-2018, Javier Burguete Tolosa.
+Copyright 2016-2020, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file interface.h
  * \brief Header file of the lights off game interface.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016-2018, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2020, Javier Burguete Tolosa.
  */
 #ifndef INTERFACE__H
 #define INTERFACE__H 1

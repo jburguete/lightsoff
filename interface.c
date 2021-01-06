@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016-2018, Javier Burguete Tolosa.
+Copyright 2016-2020, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file interface.c
  * \brief Source file of the lights off game interface.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016-2018, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2020, Javier Burguete Tolosa.
  */
 #include <stdlib.h>
 #include <stdint.h>
@@ -87,11 +87,12 @@ GtkSpinButton *spin_level;      ///< GtkSpinButton to set the game level.
 GtkLabel *label_movements;      ///< Label showing the number of user movements.
 GtkCheckButton *button_input;   ///< Button to set the new games input method.
 GtkToggleButton **array_buttons = NULL; ///< Array of light buttons.
-GtkToolButton *button_new;      ///< New game tool button.
-GtkToolButton *button_options;  ///< Game options tool button.
-GtkToolButton *button_clear;    ///< Clear game tool button.
-GtkToolButton *button_undo;     ///< Undo last movement tool button.
-GtkToolButton *button_solution; ///< Solution tool button.
+GtkButton *button_new;          ///< New game tool button.
+GtkButton *button_options;      ///< Game options tool button.
+GtkButton *button_clear;        ///< Clear game tool button.
+GtkButton *button_undo;         ///< Undo last movement tool button.
+GtkButton *button_solution;     ///< Solution tool button.
+GtkComboBoxText *combo_theme;   ///< GtkComboBoxText to set the theme.
 GtkGrid *grid;                  ///< Light buttons grid.
 GtkWindow *window;              ///< Main window.
 GtkApplication *application;    ///< Application.
@@ -348,15 +349,14 @@ window_set ()
         {
           gtk_toggle_button_set_active (array_buttons[i], 1);
           image = (GtkImage *)
-            gtk_image_new_from_icon_name (light_images[window_theme],
-                                          GTK_ICON_SIZE_BUTTON);
+            gtk_image_new_from_icon_name (light_images[window_theme]);
         }
       else
         {
           gtk_toggle_button_set_active (array_buttons[i], 0);
           image = NULL;
         }
-      gtk_button_set_image (GTK_BUTTON (array_buttons[i]), GTK_WIDGET (image));
+      gtk_button_set_child (GTK_BUTTON (array_buttons[i]), GTK_WIDGET (image));
       g_signal_handler_unblock (array_buttons[i], array_ids[i]);
     }
   snprintf (label, 64, _("Number of movements: %u"), window_movements);
@@ -401,8 +401,10 @@ window_move (GtkToggleButton * button)  ///< button to move.
                                 _("Game solved in %u movements"),
                                 window_movements);
       gtk_window_set_title (GTK_WINDOW (dialog), _("Congratulations!"));
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (GTK_WIDGET (dialog));
+			gtk_widget_show (GTK_WIDGET (dialog));
+			g_signal_connect_swapped (dialog, "response",
+                                G_CALLBACK (gtk_window_destroy),
+																GTK_WINDOW (dialog));
     }
 }
 
@@ -446,6 +448,7 @@ window_custom ()
     GTK_WIDGET (button_solution),
   };
   GtkMessageDialog *dialog;
+	GMainLoop *loop;
   unsigned int i;
   for (i = 0; i < 5; ++i)
     gtk_widget_set_sensitive (widget[i], 0);
@@ -462,11 +465,14 @@ window_custom ()
                             GTK_BUTTONS_OK,
                             _("Click on the wanted buttons and press OK "
                               "button"));
+	gtk_widget_show (GTK_WIDGET (dialog));
   gtk_window_set_title (GTK_WINDOW (dialog), _("Set the game"));
-  g_signal_connect (dialog, "response", G_CALLBACK (gtk_main_quit), NULL);
-  gtk_widget_show_all (GTK_WIDGET (dialog));
-  gtk_main ();
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  loop = g_main_loop_new (NULL, 0);
+  g_signal_connect_swapped (dialog, "response", G_CALLBACK (g_main_loop_quit),
+                            loop);
+	g_main_loop_run (loop);
+	g_main_loop_unref (loop);
+  gtk_window_destroy (GTK_WINDOW (dialog));
   for (i = 0; i < window_squares; ++i)
     {
       g_signal_handler_disconnect (array_buttons[i], array_ids[i]);
@@ -485,7 +491,7 @@ window_new_game ()
 {
   unsigned int i, j, k;
   for (i = 0; i < window_squares; ++i)
-    gtk_widget_destroy (GTK_WIDGET (array_buttons[i]));
+    gtk_grid_remove (grid, GTK_WIDGET (array_buttons[i]));
   window_destroy ();
   nrows = window_rows;
   ncolumns = window_columns;
@@ -508,7 +514,6 @@ window_new_game ()
   window_squares = k;
   window_movements = 0;
   window_set ();
-  gtk_widget_show_all (GTK_WIDGET (grid));
   if (window_input)
     window_custom ();
 }
@@ -524,8 +529,26 @@ window_options_update ()
   columns = gtk_spin_button_get_value_as_int (spin_columns);
   gtk_spin_button_set_range (spin_level, 1., rows * columns);
   gtk_widget_set_sensitive (GTK_WIDGET (spin_level),
-                            !gtk_toggle_button_get_active
-                            (GTK_TOGGLE_BUTTON (button_input)));
+                            ! gtk_check_button_get_active (button_input));
+}
+
+/**
+ * Function to close the options dialog.
+ */
+static void
+window_options_close (GtkDialog * dlg, ///< options GtkDialog.
+                      int response_id) ///< response identifier.
+{
+	if (response_id == GTK_RESPONSE_OK)
+    {
+      window_rows = gtk_spin_button_get_value_as_int (spin_rows);
+      window_columns = gtk_spin_button_get_value_as_int (spin_columns);
+      level = gtk_spin_button_get_value_as_int (spin_level);
+      window_input
+        = gtk_check_button_get_active (button_input);
+      window_theme = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_theme));
+    }
+  gtk_window_destroy (GTK_WINDOW (dlg));
 }
 
 /**
@@ -541,8 +564,7 @@ window_options ()
   GtkDialog *dialog;
   GtkGrid *grid;
   GtkLabel *label;
-  GtkComboBoxText *combo;
-  GtkContainer *content;
+  GtkBox *content;
   unsigned int i;
   dialog = (GtkDialog *)
     gtk_dialog_new_with_buttons (_("Options"),
@@ -550,9 +572,10 @@ window_options ()
                                  GTK_DIALOG_MODAL,
                                  _("_OK"), GTK_RESPONSE_OK,
                                  _("_Cancel"), GTK_RESPONSE_CANCEL, NULL);
-  content = (GtkContainer *) gtk_dialog_get_content_area (dialog);
+	gtk_widget_show (GTK_WIDGET (dialog));
+  content = (GtkBox *) gtk_dialog_get_content_area (dialog);
   grid = (GtkGrid *) gtk_grid_new ();
-  gtk_container_add (content, GTK_WIDGET (grid));
+  gtk_box_append (content, GTK_WIDGET (grid));
   label = (GtkLabel *) gtk_label_new (_("Number of rows"));
   gtk_grid_attach (grid, GTK_WIDGET (label), 0, 0, 1, 1);
   label = (GtkLabel *) gtk_label_new (_("Number of columns"));
@@ -577,28 +600,19 @@ window_options ()
   button_input = (GtkCheckButton *)
     gtk_check_button_new_with_mnemonic (_("_Custom input"));
   gtk_grid_attach (grid, GTK_WIDGET (button_input), 0, 3, 2, 1);
-  g_signal_connect (button_input, "clicked",
+  g_signal_connect (button_input, "toggled",
                     G_CALLBACK (window_options_update), NULL);
-  combo = (GtkComboBoxText *) gtk_combo_box_text_new ();
+  combo_theme = (GtkComboBoxText *) gtk_combo_box_text_new ();
   for (i = 0; i < N_THEMES; ++i)
-    gtk_combo_box_text_append_text (combo, window_themes[i]);
-  gtk_grid_attach (grid, GTK_WIDGET (combo), 1, 4, 1, 1);
-  gtk_widget_show_all (GTK_WIDGET (content));
+    gtk_combo_box_text_append_text (combo_theme, window_themes[i]);
+  gtk_grid_attach (grid, GTK_WIDGET (combo_theme), 1, 4, 1, 1);
   gtk_spin_button_set_value (spin_rows, window_rows);
   gtk_spin_button_set_value (spin_columns, window_columns);
   gtk_spin_button_set_value (spin_level, level);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button_input), window_input);
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), window_theme);
-  if (gtk_dialog_run (dialog) == GTK_RESPONSE_OK)
-    {
-      window_rows = gtk_spin_button_get_value_as_int (spin_rows);
-      window_columns = gtk_spin_button_get_value_as_int (spin_columns);
-      level = gtk_spin_button_get_value_as_int (spin_level);
-      window_input
-        = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button_input));
-      window_theme = gtk_combo_box_get_active (GTK_COMBO_BOX (combo));
-    }
-  gtk_widget_destroy (GTK_WIDGET (dialog));
+  gtk_check_button_set_active (button_input, window_input);
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo_theme), window_theme);
+  g_signal_connect (dialog, "response", G_CALLBACK (window_options_close),
+                    NULL);
 }
 
 /**
@@ -614,9 +628,8 @@ window_solve ()
   for (i = 0; i < nmovements; ++i)
     {
       image = (GtkImage *)
-        gtk_image_new_from_icon_name (solution_images[window_theme],
-                                      GTK_ICON_SIZE_BUTTON);
-      gtk_button_set_image (GTK_BUTTON (array_buttons[movement[i]]),
+        gtk_image_new_from_icon_name (solution_images[window_theme]);
+      gtk_button_set_child (GTK_BUTTON (array_buttons[movement[i]]),
                             GTK_WIDGET (image));
     }
   if (nmovements < 0)
@@ -627,9 +640,11 @@ window_solve ()
                                 GTK_MESSAGE_INFO,
                                 GTK_BUTTONS_OK,
                                 "%s", _("Unable to find a solution"));
+			gtk_widget_show (GTK_WIDGET (dialog));
       gtk_window_set_title (GTK_WINDOW (dialog), _("Sorry!"));
-      gtk_dialog_run (GTK_DIALOG (dialog));
-      gtk_widget_destroy (GTK_WIDGET (dialog));
+			g_signal_connect_swapped (dialog, "response",
+                                G_CALLBACK (gtk_window_destroy),
+																GTK_WINDOW (dialog));
     }
 }
 
@@ -648,9 +663,9 @@ window_about ()
      "program-name", "LightsOff",
      "comments", _("Lights off game"),
      "authors", authors,
-     "copyright", "Copyright 2016-2018 Javier Burguete Tolosa",
+     "copyright", "Copyright 2016-2020 Javier Burguete Tolosa",
      "license-type", GTK_LICENSE_BSD,
-     "version", "0.0",
+     "version", "1.0",
      "website", "http://github.com/jburguete/lightsoff", NULL);
 }
 
@@ -660,101 +675,87 @@ window_about ()
 void
 window_activate (GtkApplication * application)
 {
-  GtkToolbar *toolbar;
-  GtkToolButton *button;
-  GtkImage *image;
-  GdkPixbuf *pixbuf;
+  GtkBox *box;
+  GtkButton *button;
+//  GdkPixbuf *pixbuf;
+
+#if DEBUG
+	fprintf (stderr, "window_activate: start\n");
+#endif
 
   // Main window
   window = (GtkWindow *) gtk_application_window_new (application);
   gtk_window_set_title (window, _("Lights off"));
   gtk_widget_set_size_request (GTK_WIDGET (window), 320, 440);
+	gtk_widget_show (GTK_WIDGET (window));
 
   // Logo
-  pixbuf = gdk_pixbuf_new_from_xpm_data (logo_xpm);
-  gtk_window_set_default_icon (pixbuf);
+//  pixbuf = gdk_pixbuf_new_from_xpm_data (logo_xpm);
+//  gtk_window_set_default_icon (pixbuf);
 
   // Grid
   grid = (GtkGrid *) gtk_grid_new ();
-  gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (grid));
+  gtk_window_set_child (window, GTK_WIDGET (grid));
 
   // Toolbar
-  toolbar = (GtkToolbar *) gtk_toolbar_new ();
-  gtk_grid_attach (grid, GTK_WIDGET (toolbar), 0, -1, N_MAX_COLUMNS, 1);
+  box = (GtkBox *) gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  gtk_grid_attach (grid, GTK_WIDGET (box), 0, -1, N_MAX_COLUMNS, 1);
 
-  // Exit tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("application-exit",
-                                  GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button = (GtkToolButton *)
-    gtk_tool_button_new (GTK_WIDGET (image), _("Exit"));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Exit"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button), 0);
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (g_application_quit),
-                            G_APPLICATION (application));
-
-  // About tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("help-about", GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button = (GtkToolButton *)
-    gtk_tool_button_new (GTK_WIDGET (image), _("About"));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("About"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button), 0);
-  g_signal_connect (button, "clicked", G_CALLBACK (window_about), NULL);
-
-  // Solution tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("system-help", GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button_solution =
-    (GtkToolButton *) gtk_tool_button_new (GTK_WIDGET (image),
-                                           _("Optimal solution"));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (button_solution),
-                               _("Show the optimal solution"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button_solution), 0);
-  g_signal_connect (button_solution, "clicked", G_CALLBACK (window_solve),
-                    NULL);
-
-  // Undo tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("edit-undo", GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button_undo =
-    (GtkToolButton *) gtk_tool_button_new (GTK_WIDGET (image), _("Undo"));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (button_undo),
-                               _("Undo the last movement"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button_undo), 0);
-  g_signal_connect (button_undo, "clicked", G_CALLBACK (window_undo), NULL);
-
-  // Clear tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("edit-clear", GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button_clear =
-    (GtkToolButton *) gtk_tool_button_new (GTK_WIDGET (image), _("Clear"));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (button_clear),
-                               _("Clear all movements"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button_clear), 0);
-  g_signal_connect (button_clear, "clicked", G_CALLBACK (window_clear), NULL);
+  // New game tool
+  button_new = (GtkButton *)
+    gtk_button_new_from_icon_name ("document-new");
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button_new), _("New game"));
+  gtk_box_append (box, GTK_WIDGET (button_new));
+  g_signal_connect (button_new, "clicked", G_CALLBACK (window_new_game), NULL);
 
   // Options tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("preferences-desktop",
-                                  GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button_options =
-    (GtkToolButton *) gtk_tool_button_new (GTK_WIDGET (image),
-                                           _("Preferences"));
+  button_options = (GtkButton *)
+    gtk_button_new_from_icon_name ("preferences-desktop");
   gtk_widget_set_tooltip_text (GTK_WIDGET (button_options), _("Preferences"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button_options), 0);
+  gtk_box_append (box, GTK_WIDGET (button_options));
   g_signal_connect (button_options, "clicked", G_CALLBACK (window_options),
                     NULL);
 
-  // New game tool
-  image = (GtkImage *)
-    gtk_image_new_from_icon_name ("document-new", GTK_ICON_SIZE_SMALL_TOOLBAR);
-  button_new =
-    (GtkToolButton *) gtk_tool_button_new (GTK_WIDGET (image), _("New game"));
-  gtk_widget_set_tooltip_text (GTK_WIDGET (button_new), _("New game"));
-  gtk_toolbar_insert (toolbar, GTK_TOOL_ITEM (button_new), 0);
-  g_signal_connect (button_new, "clicked", G_CALLBACK (window_new_game), NULL);
+  // Clear tool
+  button_clear = (GtkButton *)
+    gtk_button_new_from_icon_name ("edit-clear");
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button_clear),
+                               _("Clear all movements"));
+  gtk_box_append (box, GTK_WIDGET (button_clear));
+  g_signal_connect (button_clear, "clicked", G_CALLBACK (window_clear), NULL);
+
+  // Undo tool
+  button_undo = (GtkButton *)
+    gtk_button_new_from_icon_name ("edit-undo");
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button_undo),
+                               _("Undo the last movement"));
+  gtk_box_append (box, GTK_WIDGET (button_undo));
+  g_signal_connect (button_undo, "clicked", G_CALLBACK (window_undo), NULL);
+
+  // Solution tool
+  button_solution = (GtkButton *)
+    gtk_button_new_from_icon_name ("system-help");
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button_solution),
+                               _("Show the optimal solution"));
+  gtk_box_append (box, GTK_WIDGET (button_solution));
+  g_signal_connect (button_solution, "clicked", G_CALLBACK (window_solve),
+                    NULL);
+
+  // About tool
+  button = (GtkButton *)
+    gtk_button_new_from_icon_name ("help-about");
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("About"));
+  gtk_box_append (box, GTK_WIDGET (button));
+  g_signal_connect (button, "clicked", G_CALLBACK (window_about), NULL);
+
+  // Exit tool
+  button = (GtkButton *)
+    gtk_button_new_from_icon_name ("application-exit");
+  gtk_widget_set_tooltip_text (GTK_WIDGET (button), _("Exit"));
+  gtk_box_append (box, GTK_WIDGET (button));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (g_application_quit),
+                            G_APPLICATION (application));
 
   // Movements label
   label_movements = (GtkLabel *) gtk_label_new (NULL);
@@ -764,6 +765,7 @@ window_activate (GtkApplication * application)
   // First game
   window_new_game ();
 
-  // Showing all
-  gtk_widget_show_all (GTK_WIDGET (window));
+#if DEBUG
+	fprintf (stderr, "window_activate: end\n");
+#endif
 }

@@ -1,3 +1,5 @@
+.PHONY: strip
+
 CC = @CC@ @ARCH@ @LTO@ @STD@
 CFLAGS = -c -Wall -O3 @CPPFLAGS@
 LDFLAGS = @LDFLAGS@ @LIBS@ @GLIB_LIBS@ @GTK_LIBS@
@@ -9,7 +11,7 @@ ES = es/LC_MESSAGES/
 FR = fr/LC_MESSAGES/
 GB = en_GB/LC_MESSAGES/
 
-all: lightsoff po/$(ES)lightsoff.mo po/$(FR)lightsoff.mo
+all: lightsoff@EXE@ po/$(ES)lightsoff.mo po/$(FR)lightsoff.mo
 
 game.o: game.c game.h $(DEP)
 	$(CC) $(CFLAGS) @GLIB_CFLAGS@ game.c
@@ -20,10 +22,10 @@ interface.o: interface.c interface.h game.h $(DEP)
 main.o: main.c interface.h game.h $(DEP)
 	$(CC) $(CFLAGS) @GLIB_CFLAGS@ @GTK_CFLAGS@ main.c
 
-lightsoff: $(OBJ)
-	$(CC) $(OBJ) @ICON@ $(LDFLAGS) -o lightsoff
+lightsoff@EXE@: $(OBJ)
+	$(CC) $(OBJ) @ICON@ $(LDFLAGS) -o lightsoff@EXE@
 
-po/lightsoff.pot: lightsoff
+po/lightsoff.pot: lightsoff@EXE@
 	test -d po || mkdir po
 	xgettext -k_ -d lightsoff -o po/lightsoff.pot --from-code=UTF-8 $(SRC)
 
@@ -56,3 +58,7 @@ lightsoff.ico: lightsoff.png Makefile
 
 @ICON@: lightsoff.rc lightsoff.ico
 	@WINDRES@ lightsoff.rc -o @ICON@
+
+strip:
+	make
+	strip lightsoff

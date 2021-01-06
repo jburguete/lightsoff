@@ -37,6 +37,7 @@ OF SUCH DAMAGE.
 #define CONFIG__H 1
 
 #define _(str) (gettext (str))  ///< Macro to simplify gettext calls.
+#define DEBUG 1                 ///< Macro to debug the code.
 #define DEFAULT_ROWS 5          ///< Default number of rows.
 #define DEFAULT_COLUMNS 5       ///< Default number of columns.
 #define DEFAULT_LEVEL 3         ///< Default game level.

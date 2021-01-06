@@ -1,5 +1,5 @@
 AC_PREREQ([2.67])
-AC_INIT([lightsoff], [0.0], [https://github.com/jburguete/lightsoff])
+AC_INIT([lightsoff], [1.0], [https://github.com/jburguete/lightsoff])
 
 # Checks for operative systems
 AC_CANONICAL_SYSTEM
@@ -44,11 +44,12 @@ AC_LANG([C])
 PKG_PROG_PKG_CONFIG
 if test $win = 1; then
 	AC_CHECK_TOOL(WINDRES, windres)
+	AC_SUBST(EXE, ".exe")
 fi
 
 # Checks for libraries
 PKG_CHECK_MODULES([GLIB], [glib-2.0])
-PKG_CHECK_MODULES([GTK], [gtk+-3.0])
+PKG_CHECK_MODULES([GTK], [gtk4])
 
 # Checks for header files
 AC_CHECK_HEADERS([stdio.h stdlib.h stdint.h string.h libintl.h])
