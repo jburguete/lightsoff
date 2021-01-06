@@ -52,6 +52,5 @@ void move (uint64_t * status, unsigned int type);
 void game_init ();
 void game_new ();
 int play ();
-void print_solution ();
 
 #endif
