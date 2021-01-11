@@ -52,8 +52,6 @@ void window_activate (GtkApplication * application);
 
 #define gtk_button_set_child(widget, child) \
 	(gtk_container_add(GTK_CONTAINER(widget), child))
-#define gtk_button_get_child(widget) \
-	((GtkWidget *)gtk_container_get_children(widget)->data)
 #define gtk_window_set_child(widget, child) \
 	(gtk_container_add(GTK_CONTAINER(widget), child))
 #define gtk_window_destroy gtk_widget_destroy

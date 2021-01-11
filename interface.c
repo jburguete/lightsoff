@@ -155,6 +155,9 @@ window_update ()
 #if DEBUG
   fprintf (stderr, "window_update: start\n");
 #endif
+#if !GTK4
+	gtk_widget_show_all (GTK_WIDGET (grid));
+#endif
   gtk_widget_set_sensitive (GTK_WIDGET (button_clear), window_movements);
   gtk_widget_set_sensitive (GTK_WIDGET (button_undo), window_movements);
   gtk_widget_set_sensitive (GTK_WIDGET (button_redo), (size_t) list_undo);
@@ -170,27 +173,43 @@ static void
 window_set ()
 {
   char label[64];
+	GtkToggleButton *button;
   GtkImage *image;
-  unsigned int i;
+#if !GTK4
+	GList *child;
+#endif
+  unsigned int i, id;
 #if DEBUG
   fprintf (stderr, "window_set: start\n");
 #endif
   for (i = 0; i < window_squares; ++i)
     {
-      g_signal_handler_block (array_buttons[i], array_ids[i]);
+			button = array_buttons[i];
+			id = array_ids[i];
+#if !GTK4
+      child = gtk_container_get_children (GTK_CONTAINER (button));
+			if (child)
+				gtk_widget_destroy (GTK_WIDGET (child->data));
+#endif
+      g_signal_handler_block (button, id);
       if (status & (1L << i))
         {
-          gtk_toggle_button_set_active (array_buttons[i], 1);
+          gtk_toggle_button_set_active (button, 1);
           image = (GtkImage *)
             image_new_from_icon_name (light_images[window_theme]);
         }
       else
         {
-          gtk_toggle_button_set_active (array_buttons[i], 0);
+          gtk_toggle_button_set_active (button, 0);
           image = NULL;
         }
-      gtk_button_set_child (GTK_BUTTON (array_buttons[i]), GTK_WIDGET (image));
-      g_signal_handler_unblock (array_buttons[i], array_ids[i]);
+#if !GTK4
+			if (image)
+			  gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (image));
+#else
+      gtk_button_set_child (GTK_BUTTON (button), GTK_WIDGET (image));
+#endif
+			g_signal_handler_unblock (button, id);
     }
   snprintf (label, 64, _("Number of movements: %u"), window_movements);
   gtk_label_set_text (label_movements, label);
@@ -372,6 +391,7 @@ window_custom ()
     }
   for (i = 0; i < 6; ++i)
     gtk_widget_set_sensitive (widget[i], 1);
+	window_update ();
 }
 
 /**
@@ -519,7 +539,11 @@ static void
 window_solve ()
 {
   GtkMessageDialog *dialog;
+	GtkToggleButton *button;
   GtkImage *image;
+#if !GTK4
+	GList *list;
+#endif
   int i;
 #if DEBUG
   fprintf (stderr, "window_solve: start\n");
@@ -527,9 +551,18 @@ window_solve ()
   nmovements = play ();
   for (i = 0; i < nmovements; ++i)
     {
+			button = array_buttons[movement[i]];
+#if !GTK4
+			list = gtk_container_get_children (GTK_CONTAINER (button));
+			if (list)
+				gtk_widget_destroy (GTK_WIDGET (list->data));
+#endif
       image = (GtkImage *)
         image_new_from_icon_name (solution_images[window_theme]);
-      gtk_button_set_child (GTK_BUTTON (array_buttons[movement[i]]),
+#if !GTK4
+			gtk_widget_show (GTK_WIDGET (image));
+#endif
+      gtk_button_set_child (GTK_BUTTON (button),
                             GTK_WIDGET (image));
     }
   if (nmovements < 0)
@@ -561,6 +594,17 @@ window_about ()
     "Javier Burguete Tolosa <jburguete@eead.csic.es>",
     NULL
   };
+#if !GTK4
+	GdkPixbuf *pixbuf, *paintable;
+#else
+	GdkPaintable *paintable;
+#endif
+#if !GTK4
+	pixbuf = gtk_image_get_pixbuf (image);
+	paintable = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
+#else
+  paintable = gtk_image_get_paintable (image);
+#endif
   gtk_show_about_dialog
     (window,
      "program-name", "LightsOff",
@@ -568,8 +612,8 @@ window_about ()
      "authors", authors,
      "copyright", "Copyright 2016-2021, Javier Burguete Tolosa",
      "license-type", GTK_LICENSE_BSD,
-     "version", "1.0",
-     "logo", gtk_image_get_paintable (image),
+     "version", "1.2",
+     "logo", paintable,
      "website", "http://github.com/jburguete/lightsoff", NULL);
 }
 
@@ -582,6 +626,9 @@ window_activate (GtkApplication * application)
   GtkBox *box;
   GtkButton *button;
   GtkHeaderBar *bar;
+#if !GTK4
+	GdkPixbuf *pixbuf, *paintable;
+#endif
 
 #if DEBUG
   fprintf (stderr, "window_activate: start\n");
@@ -589,15 +636,28 @@ window_activate (GtkApplication * application)
 
   // Main window
   window = (GtkWindow *) gtk_application_window_new (application);
+#if GTK4
   gtk_window_set_title (window, _("Lights off"));
+#endif
   gtk_widget_set_size_request (GTK_WIDGET (window), 320, 440);
 
   // Logo
   image = (GtkImage *) gtk_image_new_from_file ("logo.png");
+#if !GTK4
+	pixbuf = gtk_image_get_pixbuf (image);
+	gtk_window_set_default_icon (pixbuf);
+#endif
 
   // Header bar
   bar = (GtkHeaderBar *) gtk_header_bar_new ();
+#if !GTK4
+  gtk_header_bar_set_title (bar, _("Lights off"));
+	gtk_header_bar_set_show_close_button (bar, 1);
+	paintable = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
+	gtk_header_bar_pack_start (bar, gtk_image_new_from_pixbuf (paintable));
+#else
   gtk_header_bar_pack_start (bar, GTK_WIDGET (image));
+#endif
   gtk_window_set_titlebar (window, GTK_WIDGET (bar));
 
   // Grid

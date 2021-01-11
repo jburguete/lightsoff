@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lightsoff 0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 18:10+0100\n"
+"POT-Creation-Date: 2021-01-11 21:29+0100\n"
 "PO-Revision-Date: 2016-12-09 15:54+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -17,113 +17,113 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: interface.c:195
+#: interface.c:214
 #, c-format
 msgid "Number of movements: %u"
 msgstr "Nombre de mouvements: %u"
 
-#: interface.c:248
+#: interface.c:267
 #, c-format
 msgid "Game solved in %u movements"
 msgstr "Partie résolu en %u mouvements"
 
-#: interface.c:250
+#: interface.c:269
 msgid "Congratulations!"
 msgstr "Félicitations!"
 
-#: interface.c:357
+#: interface.c:376
 msgid "Click on the wanted buttons and press OK button"
 msgstr "Clic le boutons désirés et aprés appuyer sur le bouton d'accepter"
 
-#: interface.c:359
+#: interface.c:378
 msgid "Set the game"
 msgstr "Introduire la partie"
 
-#: interface.c:458
+#: interface.c:478
 msgid "Geometric"
 msgstr "Géométrique"
 
-#: interface.c:459
+#: interface.c:479
 msgid "Faces"
 msgstr "Visages"
 
-#: interface.c:467
+#: interface.c:487
 msgid "Options"
 msgstr "Options"
 
-#: interface.c:470
+#: interface.c:490
 msgid "_OK"
 msgstr "_Accepter"
 
-#: interface.c:471
+#: interface.c:491
 msgid "_Cancel"
 msgstr "_Annuler"
 
-#: interface.c:475
+#: interface.c:495
 msgid "Number of rows"
 msgstr "Nombre de files"
 
-#: interface.c:477
+#: interface.c:497
 msgid "Number of columns"
 msgstr "Nombre de colonnes"
 
-#: interface.c:479
+#: interface.c:499
 msgid "Game level"
 msgstr "Niveau de jeu"
 
-#: interface.c:481
+#: interface.c:501
 msgid "Theme"
 msgstr "Thème"
 
-#: interface.c:497
+#: interface.c:517
 msgid "_Custom input"
 msgstr "_Entrée personnalisée"
 
-#: interface.c:542
+#: interface.c:575
 msgid "Unable to find a solution"
 msgstr "Impossible de trouver une solution"
 
-#: interface.c:543
+#: interface.c:576
 msgid "Sorry!"
 msgstr "Désolé!"
 
-#: interface.c:567
+#: interface.c:611
 msgid "Lights off game"
 msgstr "Jeu lumières dehors"
 
-#: interface.c:592
+#: interface.c:640 interface.c:654
 msgid "Lights off"
 msgstr "Lumières dehors"
 
-#: interface.c:613
+#: interface.c:673
 msgid "New game"
 msgstr "Partie nouvelle"
 
-#: interface.c:620
+#: interface.c:680
 msgid "Preferences"
 msgstr "Préférences"
 
-#: interface.c:628
+#: interface.c:688
 msgid "Clear all movements"
 msgstr "Effacer tous mouvements"
 
-#: interface.c:635
+#: interface.c:695
 msgid "Undo the last movement"
 msgstr "Annuler le dernier mouvement"
 
-#: interface.c:642
+#: interface.c:702
 msgid "Redo the last undo movement"
 msgstr "Refaire le dernier mouvement annulé"
 
-#: interface.c:649
+#: interface.c:709
 msgid "Show the optimal solution"
 msgstr "Montrer la solution optimale"
 
-#: interface.c:656
+#: interface.c:716
 msgid "About"
 msgstr "À propos"
 
-#: interface.c:662
+#: interface.c:722
 msgid "Exit"
 msgstr "Quitter"
 
