@@ -49,7 +49,13 @@ fi
 
 # Checks for libraries
 PKG_CHECK_MODULES([GLIB], [glib-2.0])
-PKG_CHECK_MODULES([GTK], [gtk4])
+PKG_CHECK_MODULES([GTK], [gtk4], [gtk4=1], [gtk4=0])
+if test $gtk4 = 1; then
+	AC_SUBST(GTK4, "-DGTK4=1")
+else
+	AC_SUBST(GTK4, "-DGTK4=0")
+	PKG_CHECK_MODULES([GTK], [gtk+-3.0])
+fi
 
 # Checks for header files
 AC_CHECK_HEADERS([stdio.h stdlib.h stdint.h string.h libintl.h])

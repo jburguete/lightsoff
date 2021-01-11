@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016-2020, Javier Burguete Tolosa.
+Copyright 2016-2021, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file game.c
  * \brief Source file of the lights off game.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016-2020, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2021, Javier Burguete Tolosa.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -54,19 +54,9 @@ unsigned int movement[N_MAX_SQUARES];
 uint64_t movements_array[N_MAX_SQUARES];
 
 /**
- * Function to set a square.
- */
-void
-set (uint64_t * status,         ///< bits chain codifying the game status.
-     unsigned int square)       ///< square index.
-{
-  *status ^= (1L << square);
-}
-
-/**
  * Function to generate the array of movements.
  */
-void
+static inline void
 generate_movements ()
 {
   unsigned int i, j, top, left, centre, right, bottom;
@@ -150,16 +140,6 @@ generate_movements ()
 }
 
 /**
- * Function to do one movement.
- */
-void
-move (uint64_t * status,        ///< bits chain codifying the game status.
-      unsigned int type)        ///< type of movement.
-{
-  *status ^= movements_array[type];
-}
-
-/**
  * Function to init a new game.
  */
 void
@@ -198,7 +178,7 @@ game_new ()
  *
  * \return type of movement hunting the light.
  */
-static int
+static inline int
 hunt (uint64_t * status)        ///< bits chain codifying the game status.
 {
   unsigned int i, n;

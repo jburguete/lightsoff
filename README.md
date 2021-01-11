@@ -2,8 +2,8 @@ LightsOff
 =========
 
 A clone of the Tim Horton's [LightsOff](https://wiki.gnome.org/Apps/Lightsoff)
-game written in C, adding variable board sizes, custom input, image themes, undo
-and clear movements and a solver.
+game written in C, adding variable board sizes, custom input, image themes,
+undo, redo and clear movements, and a solver.
 
 ![Logo](logo.png)
 
@@ -29,7 +29,7 @@ locales)
 * [glib](https://developer.gnome.org/glib) (extended utilities of C to work with
 lists, random numbers, ...)
 * [gdk-pixbuf](https://developer.gnome.org/gdkpixbuf) (to work with images)
-* [gtk+3](http://www.gtk.org) (to create the interactive GUI tool)
+* [gtk4 (or gtk3)](http://www.gtk.org) (to create the interactive GUI tool)
 
 OPTIONAL TOOLS
 --------------
@@ -53,7 +53,7 @@ The source code has to have the following files:
 * Doxyfile: configuration file to generate doxygen documentation.
 * README.md: this file.
 * license.md: license file.
-* locales/\*/LC_MESSAGES/mpcotool.po: translation files.
+* locales/\*/LC\_MESSAGES/mpcotool.po: translation files.
 
 BUILDING INSTRUCTIONS
 ---------------------
@@ -62,26 +62,36 @@ This software has been built and tested in the following operative systems.
 Probably, it can be built in other systems, distributions, or versions but it
 has not been tested.
 
-Debian 8 (Linux, kFreeBSD or Hurd)
-__________________________________
-DragonFly BSD 4.6
-_________________
+Arch Linux
+__________
+Debian 10 (Linux or Hurd)
+_________________________
+Devuan Linux 3
+______________
+DragonFly BSD 5.8.3
+___________________
 Dyson Illumos
 _____________
-Fedora Linux 25
+Fedora Linux 33
 _______________
-FreeBSD 11.0
+FreeBSD 12.2
 ____________
-Linux Mint DE 2
+Gentoo Linux
+____________
+Linux Mint DE 4
 _______________
-NetBSD 7.0
+MacOS Catalina + Homebrew
+_________________________
+Manjaro Linux
+_____________
+NetBSD 9.1
 __________
 OpenIndiana Hipster
 ___________________
-OpenSUSE Linux Tumbleweed
-_________________________
-Ubuntu Linux 16.10
-__________________
+OpenSUSE Linux 15.2
+___________________
+Xubuntu Linux 20.10
+___________________
 
 1. Download this repository:
 > $ git clone https://github.com/jburguete/lightsoff.git
@@ -89,10 +99,6 @@ __________________
 2. Build doing on a terminal:
 > $ ./build
 
-Microsoft Windows 7
-___________________
-Microsoft Windows 8.1
-_____________________
 Microsoft Windows 10
 ____________________
 
@@ -101,19 +107,19 @@ libraries and utilities. You can follow detailed instructions in
 [install-unix]
 (https://github.com/jburguete/install-unix/blob/master/tutorial.pdf)
 
-2. Then, in a MSYS2 terminal, follow steps 1 to 2 of the previous Debian 8
+2. Then, in a MSYS2 terminal, follow steps 1 to 2 of the previous Arch Linux
 section.
 
 3. Optional Windows binary package can be built doing in the terminal:
 > $ make windist
 
-OpenBSD 6.0
+OpenBSD 6.8
 ___________
 
 1. Select adequate versions:
-> $ export AUTOCONF_VERSION=2.69 AUTOMAKE_VERSION=1.15
+> $ export AUTOCONF\_VERSION=2.69 AUTOMAKE\_VERSION=1.16
 
-2. Then, in a terminal, follow steps 1 to 2 of the previous Debian 8 section.
+2. Then, in a terminal, follow steps 1 to 2 of the previous Arch Linux section.
 
 MAKING DEVELOPER MANUALS INSTRUCTIONS
 -------------------------------------

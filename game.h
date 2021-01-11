@@ -3,7 +3,7 @@ LightsOff:
 A clone of the Tim Horton's LightsOff program written in C, adding variable
 board sizes, undo and clear movements and a solver.
 
-Copyright 2016-2020, Javier Burguete Tolosa.
+Copyright 2016-2021, Javier Burguete Tolosa.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -31,7 +31,7 @@ OF SUCH DAMAGE.
  * \file game.h
  * \brief Header file of the lights off game.
  * \author Javier Burguete Tolosa.
- * \copyright Copyright 2016-2020, Javier Burguete Tolosa.
+ * \copyright Copyright 2016-2021, Javier Burguete Tolosa.
  */
 #ifndef GAME__H
 #define GAME__H 1
@@ -46,11 +46,28 @@ extern int nmovements;
 extern unsigned int movement[N_MAX_SQUARES];
 extern uint64_t status, movements_array[N_MAX_SQUARES];
 
-void set (uint64_t * status, unsigned int square);
-void generate_movements ();
-void move (uint64_t * status, unsigned int type);
 void game_init ();
 void game_new ();
 int play ();
+
+/**
+ * Function to set a square.
+ */
+static inline void
+set (uint64_t * status,         ///< bits chain codifying the game status.
+     unsigned int square)       ///< square index.
+{
+  *status ^= (1L << square);
+}
+
+/**
+ * Function to do one movement.
+ */
+static inline void
+move (uint64_t * status,        ///< bits chain codifying the game status.
+      unsigned int type)        ///< type of movement.
+{
+  *status ^= movements_array[type];
+}
 
 #endif
