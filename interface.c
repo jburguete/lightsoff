@@ -382,7 +382,11 @@ window_custom ()
                             loop);
   g_main_loop_run (loop);
   g_main_loop_unref (loop);
+#if !GTK4
+  gtk_widget_destroy (GTK_WIDGET (dialog));
+#else
   gtk_window_destroy (GTK_WINDOW (dialog));
+#endif
   for (i = 0; i < window_squares; ++i)
     {
       g_signal_handler_disconnect (array_buttons[i], array_ids[i]);
@@ -465,7 +469,11 @@ window_options_close (GtkDialog * dlg,  ///< options GtkDialog.
       window_input = gtk_check_button_get_active (button_input);
       window_theme = gtk_combo_box_get_active (GTK_COMBO_BOX (combo_theme));
     }
+#if !GTK4
+  gtk_widget_destroy (GTK_WIDGET (dlg));
+#else
   gtk_window_destroy (GTK_WINDOW (dlg));
+#endif
 }
 
 /**

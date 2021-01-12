@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lightsoff 0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-11 21:29+0100\n"
+"POT-Creation-Date: 2021-01-12 11:51+0100\n"
 "PO-Revision-Date: 2016-12-09 15:54+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -39,91 +39,91 @@ msgstr "Pulse en los botones deseados y después en el botón de aceptar"
 msgid "Set the game"
 msgstr "Introducir partida"
 
-#: interface.c:478
+#: interface.c:486
 msgid "Geometric"
 msgstr "Geométrico"
 
-#: interface.c:479
+#: interface.c:487
 msgid "Faces"
 msgstr "Caras"
 
-#: interface.c:487
+#: interface.c:495
 msgid "Options"
 msgstr "Opciones"
 
-#: interface.c:490
+#: interface.c:498
 msgid "_OK"
 msgstr "_Aceptar"
 
-#: interface.c:491
+#: interface.c:499
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: interface.c:495
+#: interface.c:503
 msgid "Number of rows"
 msgstr "Número de filas"
 
-#: interface.c:497
+#: interface.c:505
 msgid "Number of columns"
 msgstr "Numero de columnas"
 
-#: interface.c:499
+#: interface.c:507
 msgid "Game level"
 msgstr "Nivel de juego"
 
-#: interface.c:501
+#: interface.c:509
 msgid "Theme"
 msgstr "Tema"
 
-#: interface.c:517
+#: interface.c:525
 msgid "_Custom input"
 msgstr "_Entada personalizada"
 
-#: interface.c:575
+#: interface.c:583
 msgid "Unable to find a solution"
 msgstr "Imposible encontrar una solución"
 
-#: interface.c:576
+#: interface.c:584
 msgid "Sorry!"
 msgstr "¡Lo siento!"
 
-#: interface.c:611
+#: interface.c:619
 msgid "Lights off game"
 msgstr "Juego luces fuera"
 
-#: interface.c:640 interface.c:654
+#: interface.c:648 interface.c:662
 msgid "Lights off"
 msgstr "Luces fuera"
 
-#: interface.c:673
+#: interface.c:681
 msgid "New game"
 msgstr "Nueva partida"
 
-#: interface.c:680
+#: interface.c:688
 msgid "Preferences"
 msgstr "Preferencias"
 
-#: interface.c:688
+#: interface.c:696
 msgid "Clear all movements"
 msgstr "Limpiar todos movimientos"
 
-#: interface.c:695
+#: interface.c:703
 msgid "Undo the last movement"
 msgstr "Deshacer el último movimiento"
 
-#: interface.c:702
+#: interface.c:710
 msgid "Redo the last undo movement"
 msgstr "Rehacer el último movimiento deshecho"
 
-#: interface.c:709
+#: interface.c:717
 msgid "Show the optimal solution"
 msgstr "Mostrar la solución óptima"
 
-#: interface.c:716
+#: interface.c:724
 msgid "About"
 msgstr "Acerca de"
 
-#: interface.c:722
+#: interface.c:730
 msgid "Exit"
 msgstr "Salir"
 
