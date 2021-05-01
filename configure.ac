@@ -49,7 +49,15 @@ fi
 
 # Checks for libraries
 PKG_CHECK_MODULES([GLIB], [glib-2.0])
-PKG_CHECK_MODULES([GTK], [gtk4], [gtk4=1], [gtk4=0])
+AC_ARG_WITH([gtk],
+	AS_HELP_STRING([--with-gtk],
+		[Build using a version of GTK (3 (--with-gtk=3 or 
+		 4 (--with-gtk=4 default))]))
+if test "x$with_gtk" = "x3"; then
+	gtk4=0
+else
+	PKG_CHECK_MODULES([GTK], [gtk4], [gtk4=1], [gtk4=0])
+fi
 if test $gtk4 = 1; then
 	AC_SUBST(GTK4, "-DGTK4=1")
 else
@@ -61,18 +69,24 @@ fi
 AC_CHECK_HEADERS([stdio.h stdlib.h stdint.h string.h libintl.h])
 
 # Checking -march=native compiler flag
-if test $win = 0; then
-	compiler=$CC
-	CC="$CC -march=native"
-	AC_TRY_LINK([],
-		[int main(int argc, char **argv){return 0;}], [arch=1], [arch=0])
-	CC=$compiler
-	if test $arch = 0; then
-		AC_MSG_NOTICE([checking for -march=native... no])
-		AC_SUBST(ARCH, "")
-	else
-		AC_MSG_NOTICE([checking for -march=native... yes])
-		AC_SUBST(ARCH, "-march=native")
+AC_ARG_WITH([native],
+	AS_HELP_STRING([--with-native],
+		[Build using -march=native compiler flag]))
+if test "x$with_native" = "xyes"; then
+	if test "x$native" = "x1"; then
+		compiler=$CC
+		CC="$CC -march=native"
+		AC_TRY_LINK([],
+			[int main(int argc, char **argv){return 0;}], [arch=1],
+			[arch=0])
+		CC=$compiler
+		if test $arch = 0; then
+			AC_MSG_NOTICE([checking for -march=native... no])
+			AC_SUBST(ARCH, "")
+		else
+			AC_MSG_NOTICE([checking for -march=native... yes])
+			AC_SUBST(ARCH, "-march=native")
+		fi
 	fi
 fi
 

@@ -156,7 +156,7 @@ window_update ()
   fprintf (stderr, "window_update: start\n");
 #endif
 #if !GTK4
-	gtk_widget_show_all (GTK_WIDGET (grid));
+  gtk_widget_show_all (GTK_WIDGET (grid));
 #endif
   gtk_widget_set_sensitive (GTK_WIDGET (button_clear), window_movements);
   gtk_widget_set_sensitive (GTK_WIDGET (button_undo), window_movements);
@@ -173,10 +173,10 @@ static void
 window_set ()
 {
   char label[64];
-	GtkToggleButton *button;
+  GtkToggleButton *button;
   GtkImage *image;
 #if !GTK4
-	GList *child;
+  GList *child;
 #endif
   unsigned int i, id;
 #if DEBUG
@@ -184,12 +184,12 @@ window_set ()
 #endif
   for (i = 0; i < window_squares; ++i)
     {
-			button = array_buttons[i];
-			id = array_ids[i];
+      button = array_buttons[i];
+      id = array_ids[i];
 #if !GTK4
       child = gtk_container_get_children (GTK_CONTAINER (button));
-			if (child)
-				gtk_widget_destroy (GTK_WIDGET (child->data));
+      if (child)
+        gtk_widget_destroy (GTK_WIDGET (child->data));
 #endif
       g_signal_handler_block (button, id);
       if (status & (1L << i))
@@ -204,12 +204,12 @@ window_set ()
           image = NULL;
         }
 #if !GTK4
-			if (image)
-			  gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (image));
+      if (image)
+        gtk_container_add (GTK_CONTAINER (button), GTK_WIDGET (image));
 #else
       gtk_button_set_child (GTK_BUTTON (button), GTK_WIDGET (image));
 #endif
-			g_signal_handler_unblock (button, id);
+      g_signal_handler_unblock (button, id);
     }
   snprintf (label, 64, _("Number of movements: %u"), window_movements);
   gtk_label_set_text (label_movements, label);
@@ -395,7 +395,7 @@ window_custom ()
     }
   for (i = 0; i < 6; ++i)
     gtk_widget_set_sensitive (widget[i], 1);
-	window_update ();
+  window_update ();
 }
 
 /**
@@ -547,10 +547,10 @@ static void
 window_solve ()
 {
   GtkMessageDialog *dialog;
-	GtkToggleButton *button;
+  GtkToggleButton *button;
   GtkImage *image;
 #if !GTK4
-	GList *list;
+  GList *list;
 #endif
   int i;
 #if DEBUG
@@ -559,19 +559,18 @@ window_solve ()
   nmovements = play ();
   for (i = 0; i < nmovements; ++i)
     {
-			button = array_buttons[movement[i]];
+      button = array_buttons[movement[i]];
 #if !GTK4
-			list = gtk_container_get_children (GTK_CONTAINER (button));
-			if (list)
-				gtk_widget_destroy (GTK_WIDGET (list->data));
+      list = gtk_container_get_children (GTK_CONTAINER (button));
+      if (list)
+        gtk_widget_destroy (GTK_WIDGET (list->data));
 #endif
       image = (GtkImage *)
         image_new_from_icon_name (solution_images[window_theme]);
 #if !GTK4
-			gtk_widget_show (GTK_WIDGET (image));
+      gtk_widget_show (GTK_WIDGET (image));
 #endif
-      gtk_button_set_child (GTK_BUTTON (button),
-                            GTK_WIDGET (image));
+      gtk_button_set_child (GTK_BUTTON (button), GTK_WIDGET (image));
     }
   if (nmovements < 0)
     {
@@ -603,13 +602,13 @@ window_about ()
     NULL
   };
 #if !GTK4
-	GdkPixbuf *pixbuf, *paintable;
+  GdkPixbuf *pixbuf, *paintable;
 #else
-	GdkPaintable *paintable;
+  GdkPaintable *paintable;
 #endif
 #if !GTK4
-	pixbuf = gtk_image_get_pixbuf (image);
-	paintable = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
+  pixbuf = gtk_image_get_pixbuf (image);
+  paintable = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
 #else
   paintable = gtk_image_get_paintable (image);
 #endif
@@ -635,7 +634,7 @@ window_activate (GtkApplication * application)
   GtkButton *button;
   GtkHeaderBar *bar;
 #if !GTK4
-	GdkPixbuf *pixbuf, *paintable;
+  GdkPixbuf *pixbuf, *paintable;
 #endif
 
 #if DEBUG
@@ -652,17 +651,17 @@ window_activate (GtkApplication * application)
   // Logo
   image = (GtkImage *) gtk_image_new_from_file ("logo.png");
 #if !GTK4
-	pixbuf = gtk_image_get_pixbuf (image);
-	gtk_window_set_default_icon (pixbuf);
+  pixbuf = gtk_image_get_pixbuf (image);
+  gtk_window_set_default_icon (pixbuf);
 #endif
 
   // Header bar
   bar = (GtkHeaderBar *) gtk_header_bar_new ();
 #if !GTK4
   gtk_header_bar_set_title (bar, _("Lights off"));
-	gtk_header_bar_set_show_close_button (bar, 1);
-	paintable = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
-	gtk_header_bar_pack_start (bar, gtk_image_new_from_pixbuf (paintable));
+  gtk_header_bar_set_show_close_button (bar, 1);
+  paintable = gdk_pixbuf_scale_simple (pixbuf, 16, 16, GDK_INTERP_BILINEAR);
+  gtk_header_bar_pack_start (bar, gtk_image_new_from_pixbuf (paintable));
 #else
   gtk_header_bar_pack_start (bar, GTK_WIDGET (image));
 #endif

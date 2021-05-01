@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lightsoff 0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-12 11:51+0100\n"
+"POT-Creation-Date: 2021-05-01 04:17+0200\n"
 "PO-Revision-Date: 2016-12-09 15:54+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -79,51 +79,51 @@ msgstr "Thème"
 msgid "_Custom input"
 msgstr "_Entrée personnalisée"
 
-#: interface.c:583
+#: interface.c:582
 msgid "Unable to find a solution"
 msgstr "Impossible de trouver une solution"
 
-#: interface.c:584
+#: interface.c:583
 msgid "Sorry!"
 msgstr "Désolé!"
 
-#: interface.c:619
+#: interface.c:618
 msgid "Lights off game"
 msgstr "Jeu lumières dehors"
 
-#: interface.c:648 interface.c:662
+#: interface.c:647 interface.c:661
 msgid "Lights off"
 msgstr "Lumières dehors"
 
-#: interface.c:681
+#: interface.c:680
 msgid "New game"
 msgstr "Partie nouvelle"
 
-#: interface.c:688
+#: interface.c:687
 msgid "Preferences"
 msgstr "Préférences"
 
-#: interface.c:696
+#: interface.c:695
 msgid "Clear all movements"
 msgstr "Effacer tous mouvements"
 
-#: interface.c:703
+#: interface.c:702
 msgid "Undo the last movement"
 msgstr "Annuler le dernier mouvement"
 
-#: interface.c:710
+#: interface.c:709
 msgid "Redo the last undo movement"
 msgstr "Refaire le dernier mouvement annulé"
 
-#: interface.c:717
+#: interface.c:716
 msgid "Show the optimal solution"
 msgstr "Montrer la solution optimale"
 
-#: interface.c:724
+#: interface.c:723
 msgid "About"
 msgstr "À propos"
 
-#: interface.c:730
+#: interface.c:729
 msgid "Exit"
 msgstr "Quitter"
 
